@@ -29,8 +29,10 @@ class Root():
     #create the frame that contains information related to the lottery numbers that are being currently drawn
     #later on it will be necessary to access the entry fields to update the number values. The Root object's draw_entries list will contain all entry fields.
     def createDrawFrame(self):
+        button_height_generic = 3
+
         draw_frame = LabelFrame(self.window, text = "Lottery Draw Information")
-        draw_frame.grid(row = 1, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y)
+        draw_frame.grid(row = 1, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = N+S)
         count = 1
         for x in range(0,12,2):
             draw_label = Label(draw_frame, text = f"Number {count}: ")
@@ -42,10 +44,10 @@ class Root():
             self.draw_entries.append(Entry(draw_frame, width = 5, justify = CENTER))
             self.draw_entries[-1].grid(row = x-1, column = 1, padx = self.generic_pad_x, pady = self.generic_pad_y)
 
-        draw_button = Button(draw_frame, text = "Start Drawing", command = lambda: self.draw_engine.draw_thread.start())
+        draw_button = Button(draw_frame, text = "Start Drawing", command = self.draw_engine.draw_thread.start, height = button_height_generic)
         draw_button.grid(row = 100, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
-        stop_drawing_button = Button(draw_frame, text = 'Stop Drawing', command = lambda: self.draw_engine.draw_thread.join())
+        stop_drawing_button = Button(draw_frame, text = 'Stop Drawing', command = lambda: self.draw_engine.stopDrawing(), height = button_height_generic)
         stop_drawing_button.grid(row = 100, column = 1, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
 
@@ -61,11 +63,14 @@ class Root():
             self.match_labels.append(Label(info_frame, text = f"{x+1} match: 0"))
             self.match_labels[-1].grid(row = x, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = W)
 
+        self.draws_label = Label(info_frame, text = "Total draws: 0")
+        self.draws_label.grid(row = 7, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
+
         self.cost_label = Label(info_frame, text = "Total ticket cost: $0")
-        self.cost_label.grid(row = 7, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
+        self.cost_label.grid(row = 8, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
         self.winnings_label = Label(info_frame, text = "Winnings: $0")
-        self.winnings_label.grid(row = 8, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
+        self.winnings_label.grid(row = 9, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
 
     def updateWinningsLabel(self, total_winnings):
@@ -76,3 +81,7 @@ class Root():
     def updateCostLabel(self, total_cost):
         self.cost_label.config(text = f"Total ticket cost: ${total_cost}")
         #self.cost_label.grid(row = 8, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
+
+
+    def updateDrawLabel(self, total_draws):
+        self.draws_label.config(text = f"Total draws: {total_draws}")
