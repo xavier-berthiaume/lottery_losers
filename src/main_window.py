@@ -45,7 +45,7 @@ class Root():
         draw_button = Button(draw_frame, text = "Start Drawing", command = lambda: self.draw_engine.draw_thread.start())
         draw_button.grid(row = 100, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
-        stop_drawing_button = Button(draw_frame, text = 'Stop Drawing')
+        stop_drawing_button = Button(draw_frame, text = 'Stop Drawing', command = lambda: self.draw_engine.draw_thread.join())
         stop_drawing_button.grid(row = 100, column = 1, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
 
@@ -58,7 +58,7 @@ class Root():
 
         self.match_labels = []
         for x in range(0, 6):
-            self.match_labels.append(Label(info_frame, text = f"{x+1} match: "))
+            self.match_labels.append(Label(info_frame, text = f"{x+1} match: 0"))
             self.match_labels[-1].grid(row = x, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = W)
 
         self.cost_label = Label(info_frame, text = "Total ticket cost: $0")
@@ -69,10 +69,10 @@ class Root():
 
 
     def updateWinningsLabel(self, total_winnings):
-        self.winnings_label.text = f"Winnings: ${total_winnings}"
-        self.winnings_label.grid(row = 8, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
+        self.winnings_label.config(text = f"Winnings: ${total_winnings}")
+        #self.winnings_label.grid(row = 8, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
 
     def updateCostLabel(self, total_cost):
-        self.cost_label.text = f"Total ticket cost: ${total_cost}"
-        self.cost_label.grid(row = 8, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
+        self.cost_label.config(text = f"Total ticket cost: ${total_cost}")
+        #self.cost_label.grid(row = 8, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
