@@ -1,4 +1,4 @@
-from main_window import *
+import runner
 
-frame = Root()
-
+program_instance_1 = runner.LotteryRunner()
+program_instance_1.start()

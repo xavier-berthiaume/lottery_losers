@@ -9,23 +9,28 @@ from stats import *
 
 class DrawEngine():
 
-    def __init__(self, handler):
+    def __init__(self, runner):
+        self.runner = runner
         self.winnings = 0
         self.total_cost = 0
         self.matches = [0, 0, 0, 0, 0, 0, 0, 0]
         self.draws = 0
         self.drawing = False
-        self.stat_engine = StatEngine(self)
-        if handler.__class__.__name__ == 'Root':
-            self.window = handler
-            self.generateWinningCombination()
-        elif handler.__class__.__name__ == 'StatEngine':
-            pass
-        self.draw_thread = Thread(target = self.startDrawing)
+        #self.stat_engine = StatEngine(self)
+        self.__first_draw = True
+        self.window = runner.root_window
+        self.generateWinningCombination()
+        self.draw_thread = Thread(target = self.conductDraw)
 
 
     def startDrawing(self):
+        if self.__first_draw:
+            self.__first_draw = False
+            self.draw_thread.start()
         self.drawing = True
+
+
+    def conductDraw(self):
         while True:
             if self.drawing:
                 self.drawn_values = []
@@ -49,7 +54,7 @@ class DrawEngine():
                     self.window.draw_entries[x].delete(0, END)
                     self.window.draw_entries[x].insert(0, str(self.drawn_values[-1]))
                 '''
-                #time.sleep(1)
+                #time.sleep(0.01)
 
 
     def stopDrawing(self):
