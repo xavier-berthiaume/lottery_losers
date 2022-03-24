@@ -2,15 +2,19 @@ from tkinter import *
 import drawloop
 
 class Root():
-    def __init__(self):
+    def __init__(self, runner):
+        self.runner = runner
         #initialize some default values that you use to build the frame
         self.generic_pad_x = 2
         self.generic_pad_y = 3
-        self.draw_engine = drawloop.DrawEngine(self)
         #design the root window
         self.window = Tk()
         self.window.title("Lottery Losers")
         #self.window.geometry("200x200")
+
+
+    #after all engines are set up in the runner, initialize the frames so that they can have the draw engine passed onto them
+    def initializeFrames(self):
         self.createWinningFrame()
         self.createDrawFrame()
         self.createInfoFrame()
@@ -22,7 +26,7 @@ class Root():
         winning_frame = LabelFrame(self.window, text = "Winning Combination")
         winning_frame.grid(row = 0, column = 0, columnspan = 2, padx = self.generic_pad_x, pady = self.generic_pad_y, ipady = 5,  sticky = E+W)
 
-        combination_label = Label(winning_frame, text = f"The winning combination: {self.draw_engine.winningCombination}, Bonus: {self.draw_engine.bonus}")
+        combination_label = Label(winning_frame, text = f"The winning combination: {self.runner.draw_engine.winningCombination}, Bonus: {self.runner.draw_engine.bonus}")
         combination_label.grid(row = 0, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y)
 
 
@@ -50,13 +54,14 @@ class Root():
             self.draw_entries.append(Entry(draw_frame, width = 5, justify = CENTER))
             self.draw_entries[-1].grid(row = x, column = 1, padx = self.generic_pad_x, pady = self.generic_pad_y)
 
-        draw_button = Button(draw_frame, text = "Start Drawing", command = self.draw_engine.draw_thread.start, height = button_height_generic)
+        draw_button = Button(draw_frame, text = "Start Drawing", command = self.runner.draw_engine.startDrawing, height = button_height_generic)
         draw_button.grid(row = 14, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
-        stop_drawing_button = Button(draw_frame, text = 'Stop Drawing', command = lambda: self.draw_engine.stopDrawing, height = button_height_generic)
+        stop_drawing_button = Button(draw_frame, text = 'Stop Drawing', command = lambda: self.runner.draw_engine.stopDrawing, height = button_height_generic)
         stop_drawing_button.grid(row = 14, column = 1, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
-        stats_button = Button(draw_frame, text = 'Generate Stats', command = self.draw_engine.stat_engine.createLogDump)
+        #remember to add the functionality to generate stats since it has been removed for centralization
+        stats_button = Button(draw_frame, text = 'Generate Stats')
         stats_button.grid(row = 15, column  = 0, columnspan = 2, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
 
