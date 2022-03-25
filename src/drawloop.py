@@ -32,7 +32,7 @@ class DrawEngine():
 
     def conductDraw(self):
         while True:
-            time.sleep(.1)
+            time.sleep(.001)
             if self.drawing:
                 self.drawn_values = []
                 self.buyTicket()
@@ -49,6 +49,8 @@ class DrawEngine():
                     self.window.draw_entries[x].insert(0, str(self.drawn_values[x]))
 
                 self.checkMatches()
+                if (self.draws % 10000) == 0:
+                    self.runner.saveRun()
 
 
     def stopDrawing(self):
