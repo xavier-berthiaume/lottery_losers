@@ -36,6 +36,11 @@ class LotteryRunner():
         self.db = db_handler.Db(self)
 
 
+    def saveRun(self):
+        run_to_save = stats.Run(self)
+        self.db.storeRun(run_to_save)
+
+
     @staticmethod
     def generateName():
         str_list = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')

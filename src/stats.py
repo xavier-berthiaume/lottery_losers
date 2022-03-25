@@ -46,5 +46,9 @@ class Run():
         self.matches = runner.draw_engine.matches.copy()
         self.total_cost = runner.draw_engine.total_cost
         self.winnings = runner.draw_engine.winnings
-        self.winning_combination = runner.draw_engine.winningCombination.copy()
+        self.winning_combination = runner.draw_engine.winningCombination
         self.winning_bonus = runner.draw_engine.bonus
+
+
+    def winningCombinationToString(self):
+        return str(self.winning_combination)

@@ -36,7 +36,7 @@ class Db():
                 matches_five_bonus integer,
                 total_cost integer,
                 total_winnings integer,
-                winning_combination blob,
+                winning_combination text,
                 winning_bonus integer
                 )""")
             self.runner.log.logInfoMessage('Table successfully created')
@@ -60,7 +60,7 @@ class Db():
                     'matches_five_bonus': run.matches[7],
                     'total_cost': run.total_cost,
                     'total_winnings': run.winnings,
-                    'winning_combination': run.winning_combination,
+                    'winning_combination': run.winningCombinationToString(),
                     'winning_bonus': run.winning_bonus
                 })
 
