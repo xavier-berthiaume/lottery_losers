@@ -45,7 +45,7 @@ class LotteryRunner():
         self.db.createControllers()
 
         while True:
-            time.sleep(10)
+            time.sleep(1)
             if self.save_to_db:
                 run_to_save = stats.Run(self)
                 self.db.storeRun(run_to_save)
