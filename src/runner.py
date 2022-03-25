@@ -4,6 +4,9 @@ import main_window
 import stats
 import db_handler
 import random, secrets
+import time
+
+from threading import Thread
 
 
 #main class that will centralize all the elements of the app and allow them to easily pass information from one module to the other
@@ -13,6 +16,7 @@ class LotteryRunner():
     def __init__(self):
         LotteryRunner.num_runners += 1
         self.name = LotteryRunner.generateName()
+        self.save_to_db = False
 
 
     def start(self):
@@ -21,6 +25,7 @@ class LotteryRunner():
 
         self.initializeDB()
         self.log.logInfoMessage('connection to database successful')
+        self.root_window.initializeFrames()
 
 
     def initializeEngines(self):
@@ -29,16 +34,26 @@ class LotteryRunner():
         self.stats_engine = stats.StatEngine(self)
         self.log = log.LogEngine(self)
 
-        self.root_window.initializeFrames()
-
 
     def initializeDB(self):
+        self.db_thread = Thread(target = self.dbFunction)
+        self.db_thread.start()
+
+
+    def dbFunction(self):
         self.db = db_handler.Db(self)
+        self.db.createControllers()
+
+        while True:
+            time.sleep(10)
+            if self.save_to_db:
+                run_to_save = stats.Run(self)
+                self.db.storeRun(run_to_save)
+                self.save_to_db = False
 
 
     def saveRun(self):
-        run_to_save = stats.Run(self)
-        self.db.storeRun(run_to_save)
+        self.save_to_db = True
 
 
     @staticmethod

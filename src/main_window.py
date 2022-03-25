@@ -54,15 +54,14 @@ class Root():
             self.draw_entries.append(Entry(draw_frame, width = 5, justify = CENTER))
             self.draw_entries[-1].grid(row = x, column = 1, padx = self.generic_pad_x, pady = self.generic_pad_y)
 
-        draw_button = Button(draw_frame, text = "Start Drawing", command = self.runner.draw_engine.startDrawing, height = button_height_generic)
+        draw_button = Button(draw_frame, text = "Start Drawing", command = lambda: self.runner.draw_engine.startDrawing(), height = button_height_generic)
         draw_button.grid(row = 14, column = 0, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
-        stop_drawing_button = Button(draw_frame, text = 'Stop Drawing', command = lambda: self.runner.draw_engine.stopDrawing, height = button_height_generic)
+        stop_drawing_button = Button(draw_frame, text = 'Stop Drawing', command = lambda: self.runner.draw_engine.stopDrawing(), height = button_height_generic)
         stop_drawing_button.grid(row = 14, column = 1, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
-        #remember to add the functionality to generate stats since it has been removed for centralization
-        stats_button = Button(draw_frame, text = 'Save Run', command = self.runner.saveRun)
-        stats_button.grid(row = 15, column  = 0, columnspan = 2, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
+        save_button = Button(draw_frame, text = 'Save Run', command = lambda: self.runner.saveRun())
+        save_button.grid(row = 15, column  = 0, columnspan = 2, padx = self.generic_pad_x, pady = self.generic_pad_y, sticky = E+W)
 
 
     #create a frame tha contains all the information that relates to lottery wins and losses (1 match all the way to 6 match)
