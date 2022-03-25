@@ -7,38 +7,44 @@ from drawloop import *
 
 class StatEngine():
 
-
     def __init__(self, runner):
         self.runner = runner
-        self.draw_engine = runner.draw_engine
 
 
     #calculate the average cost of a lottery ticket considering the value gained from winnings
     def averageCost(self):
-        engine = self.draw_engine
+        engine = self.runner.draw_engine
         av_cost = (engine.total_cost - engine.winnings)/engine.draws
-        return f"Run average cost per ticket: {av_cost}"
+        return av_cost
 
 
     #calculate the average revenue that a single ticket generates
     def averageRevenue(self):
-        engine = self.draw_engine
+        engine = self.runner.draw_engine
         av_rev = engine.winnings/engine.draws
-        return f"Run average revenue per ticket: {av_rev}"
+        return av_rev
 
 
     #calculate the % chance of just winning, regardless of the amount of matches. Doesn't count 1 match since it doesn't win any money.
     def percentWinningTickets(self):
-        engine = self.draw_engine
+        engine = self.runner.draw_engine
         per_winning = ((sum(engine.matches)-engine.matches[0])/engine.draws)*100
-        return f"Run percentages of winning per ticket (any match that won money): {per_winning}%"
+        return per_winning
 
 
-        #below classes will be used to store a run's information and statistics within, and will be stored to the database.
+        #below class will be used to store a run's information and statistics within, and will be stored to the database.
         #functionality to retrieve this information and feed it to a decoder/numpy project that will extrapolate information from these stats is to come.
-class RunInfo():
-    pass
+class Run():
+
+    def __init__(self, runner):
+        self.setRunValues(runner)
 
 
-class StatInfo():
-    pass
+    def setRunValues(self, runner):
+        self.name = runner.name
+        self.draws = runner.draw_engine.draws
+        self.matches = runner.draw_engine.matches.copy()
+        self.total_cost = runner.draw_engine.total_cost
+        self.winnings = runner.draw_engine.winnings
+        self.winning_combination = runner.draw_engine.winningCombination.copy()
+        self.winning_bonus = runner.draw_engine.bonus

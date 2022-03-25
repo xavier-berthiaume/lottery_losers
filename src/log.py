@@ -14,7 +14,7 @@ class LogEngine():
         logger = logging.getLogger(__name__)
 
         file_handler = logging.FileHandler('../log/stats.log')
-        file_handler.setLevel(logging.INFO)
+        file_handler.setLevel(logging.WARNING)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         file_handler.setFormatter(formatter)
 
@@ -24,8 +24,8 @@ class LogEngine():
 
 
     def logInfoMessage(self, message: str):
-        self.logger.info(f"Runner {self.runner.name} {message}")
+        self.logger.info(f"Runner {self.runner.name} - {message}")
 
 
     def logWarningMessage(self, message: str):
-        self.logger.warning(f"Runner {self.runner.name} {message}")
+        self.logger.warning(f"Runner {self.runner.name} - {message}")

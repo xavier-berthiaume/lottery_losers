@@ -2,6 +2,7 @@ import drawloop
 import log
 import main_window
 import stats
+import db_handler
 import random, secrets
 
 
@@ -18,6 +19,9 @@ class LotteryRunner():
         self.initializeEngines()
         self.log.logInfoMessage('set up without issue')
 
+        self.initializeDB()
+        self.log.logInfoMessage('connection to database successful')
+
 
     def initializeEngines(self):
         self.root_window = main_window.Root(self)
@@ -26,6 +30,10 @@ class LotteryRunner():
         self.log = log.LogEngine(self)
 
         self.root_window.initializeFrames()
+
+
+    def initializeDB(self):
+        self.db = db_handler.Db(self)
 
 
     @staticmethod
