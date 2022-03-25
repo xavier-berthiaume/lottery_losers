@@ -2,9 +2,9 @@ from tkinter import *
 import random
 import secrets
 import main_window
-import time
 from threading import Thread
 from stats import *
+import time
 
 
 class DrawEngine():
@@ -32,6 +32,7 @@ class DrawEngine():
 
     def conductDraw(self):
         while True:
+            time.sleep(.1)
             if self.drawing:
                 self.drawn_values = []
                 self.buyTicket()
@@ -48,19 +49,10 @@ class DrawEngine():
                     self.window.draw_entries[x].insert(0, str(self.drawn_values[x]))
 
                 self.checkMatches()
-                '''
-                for x in range(0,6):
-                    self.drawn_values.append(random.randint(0, 49))
-                    self.window.draw_entries[x].delete(0, END)
-                    self.window.draw_entries[x].insert(0, str(self.drawn_values[-1]))
-                '''
-                #time.sleep(0.01)
 
 
     def stopDrawing(self):
         self.drawing = False
-        #time.sleep(.1)
-        #self.draw_thread.join()
 
 
     def checkMatches(self):
