@@ -1,8 +1,9 @@
 import drawloop
 import log
 import main_window
-import stats
 import db_handler
+import run
+
 import random, secrets
 import time
 
@@ -31,7 +32,6 @@ class LotteryRunner():
     def initializeEngines(self):
         self.root_window = main_window.Root(self)
         self.draw_engine = drawloop.DrawEngine(self)
-        self.stats_engine = stats.StatEngine(self)
         self.log = log.LogEngine(self)
 
 
@@ -47,7 +47,7 @@ class LotteryRunner():
         while True:
             time.sleep(1)
             if self.save_to_db:
-                run_to_save = stats.Run(self)
+                run_to_save = run.Run(self)
                 self.db.storeRun(run_to_save)
                 self.save_to_db = False
 

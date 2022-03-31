@@ -9,14 +9,14 @@ class Db():
 
     def createControllers(self):
         #If the db file already exists, assume the table was already created, if it doesn't exist, then create the table
-        if os.path.isfile('./lottery_run_stats.db'):
+        if os.path.isfile('../lottery_run_stats.db'):
             db_exists = True
             self.runner.log.logInfoMessage('the DB file already exists, not creating a new table.')
         else:
             db_exists = False
             self.runner.log.logInfoMessage("the DB file doesn't already exist, creating a new table.")
 
-        self.connection = sqlite3.Connection('lottery_run_stats.db')
+        self.connection = sqlite3.Connection('../lottery_run_stats.db')
         self.cursor = self.connection.cursor()
 
         #unfortunate double negation here, code is only executed if the db doesn't exist
@@ -54,7 +54,7 @@ class Db():
                     'name': run.name,
                     'draws': run.draws,
                     'matches_one': run.matches[0],
-                    'matches_two': run.matches[1] ,
+                    'matches_two': run.matches[1],
                     'matches_three': run.matches[2],
                     'matches_four': run.matches[3],
                     'matches_five': run.matches[4],

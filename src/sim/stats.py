@@ -30,25 +30,3 @@ class StatEngine():
         engine = self.runner.draw_engine
         per_winning = ((sum(engine.matches)-engine.matches[0])/engine.draws)*100
         return per_winning
-
-
-        #below class will be used to store a run's information and statistics within, and will be stored to the database.
-        #functionality to retrieve this information and feed it to a decoder/numpy project that will extrapolate information from these stats is to come.
-class Run():
-
-    def __init__(self, runner):
-        self.setRunValues(runner)
-
-
-    def setRunValues(self, runner):
-        self.name = runner.name
-        self.draws = runner.draw_engine.draws
-        self.matches = runner.draw_engine.matches.copy()
-        self.total_cost = runner.draw_engine.total_cost
-        self.winnings = runner.draw_engine.winnings
-        self.winning_combination = runner.draw_engine.winningCombination
-        self.winning_bonus = runner.draw_engine.bonus
-
-
-    def winningCombinationToString(self):
-        return str(self.winning_combination)

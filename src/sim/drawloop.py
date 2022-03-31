@@ -3,7 +3,6 @@ import random
 import secrets
 import main_window
 from threading import Thread
-from stats import *
 import time
 
 
@@ -16,7 +15,6 @@ class DrawEngine():
         self.matches = [0, 0, 0, 0, 0, 0, 0, 0]
         self.draws = 0
         self.drawing = False
-        #self.stat_engine = StatEngine(self)
         self.__first_draw = True
         self.window = runner.root_window
         self.generateWinningCombination()
