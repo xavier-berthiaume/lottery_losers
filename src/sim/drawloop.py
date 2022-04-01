@@ -1,8 +1,9 @@
 from tkinter import *
+from threading import Thread
+
 import random
 import secrets
 import main_window
-from threading import Thread
 import time
 
 

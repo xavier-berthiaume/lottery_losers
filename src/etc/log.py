@@ -13,7 +13,7 @@ class LogEngine():
         logging.basicConfig(level = logging.DEBUG, format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s", datefmt = "%d/%m/%Y %H:%M:%S")
         logger = logging.getLogger(__name__)
 
-        file_handler = logging.FileHandler('../../log/stats.log')
+        file_handler = logging.FileHandler('../log/stats.log')
         file_handler.setLevel(logging.WARNING)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         file_handler.setFormatter(formatter)

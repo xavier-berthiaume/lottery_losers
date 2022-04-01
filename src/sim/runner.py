@@ -1,14 +1,16 @@
 import drawloop
-import log
 import main_window
-import db_handler
 import run
 
 import random, secrets
 import time
+import sys
 
 from threading import Thread
 
+sys.path.append('../src')
+
+from etc import db_handler, log
 
 #main class that will centralize all the elements of the app and allow them to easily pass information from one module to the other
 class LotteryRunner():
