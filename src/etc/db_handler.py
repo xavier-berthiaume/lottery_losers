@@ -75,5 +75,5 @@ class Db():
 
     def getRuns(self):
         try:
-            self.cursor.execute("SELECT * ")
+            self.cursor.execute("SELECT * from runs")
         except sqlite3.Error as e:
