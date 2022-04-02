@@ -1,6 +1,5 @@
 import drawloop
 import main_window
-import run
 
 import random, secrets
 import time
@@ -10,7 +9,7 @@ from threading import Thread
 
 sys.path.append('../src')
 
-from etc import db_handler, log
+from etc import db_handler, log, run
 
 #main class that will centralize all the elements of the app and allow them to easily pass information from one module to the other
 class LotteryRunner():
@@ -45,11 +44,20 @@ class LotteryRunner():
     def dbFunction(self):
         self.db = db_handler.Db(self)
         self.db.createControllers()
+        engine = self.draw_engine
 
         while True:
             time.sleep(1)
             if self.save_to_db:
-                run_to_save = run.Run(self)
+                run_to_save = run.Run(
+                    self.name,
+                    engine.draws,
+                    engine.matches.copy(),
+                    engine.total_cost,
+                    engine.winnings,
+                    engine.winningCombination,
+                    engine.bonus
+                    )
                 self.db.storeRun(run_to_save)
                 self.save_to_db = False
 

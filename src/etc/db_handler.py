@@ -42,7 +42,7 @@ class Db():
                 winning_combination text,
                 winning_bonus integer
                 )""")
-            self.runner.log.logInfoMessage('Table successfully created')
+            self.runner.log.logInfoMessage('table successfully created')
         except sqlite3.OperationalError as e:
             self.runner.log.logWarningMessage('error when creating the table, error: ' + str(e))
 
@@ -63,7 +63,7 @@ class Db():
                     'matches_five_bonus': run.matches[7],
                     'total_cost': run.total_cost,
                     'total_winnings': run.winnings,
-                    'winning_combination': run.winningCombinationToString(),
+                    'winning_combination': str(run.winning_combination),
                     'winning_bonus': run.winning_bonus
                 })
 
@@ -73,7 +73,10 @@ class Db():
             self.runner.log.logWarningMessage('error when writing to the database file, error: ' + str(e))
 
 
+    #Return the entries of the database as a list of tuples using the fetchall() method
     def getRuns(self):
         try:
             self.cursor.execute("SELECT * from runs")
+            return self.cursor.fetchall()
         except sqlite3.Error as e:
+            self.runner.log.logWarningMessage('error when trying to fetch the database entries')
